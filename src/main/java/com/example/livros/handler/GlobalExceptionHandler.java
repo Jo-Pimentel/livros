@@ -2,8 +2,7 @@ package com.example.livros.handler;
 
 import com.example.livros.exception.DadosAusentesException;
 import com.example.livros.exception.ErrorResponse;
-import com.example.livros.exception.LivroNaoEncontradoException;
-import org.springframework.dao.EmptyResultDataAccessException;
+import com.example.livros.exception.ItemNaoEncontradoException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -11,10 +10,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(LivroNaoEncontradoException.class)
-    public ResponseEntity<ErrorResponse> handlerLivroNaoEncontrado(LivroNaoEncontradoException lne) {
+    @ExceptionHandler(ItemNaoEncontradoException.class)
+    public ResponseEntity<ErrorResponse> handlerItemNaoEncontrado(ItemNaoEncontradoException ine) {
         ErrorResponse errorResponse = ErrorResponse.builder()
-                .mensagem(lne.getMessage())
+                .mensagem(ine.getMessage())
                 .status(HttpStatus.NOT_FOUND.value())
                 .build();
 

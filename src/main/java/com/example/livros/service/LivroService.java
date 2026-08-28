@@ -1,13 +1,12 @@
 package com.example.livros.service;
 
 import com.example.livros.exception.DadosAusentesException;
-import com.example.livros.exception.LivroNaoEncontradoException;
+import com.example.livros.exception.ItemNaoEncontradoException;
 import com.example.livros.repository.LivroRepository;
 import com.example.livros.model.Livro;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.livros.exception.LivroNaoEncontradoException;
 
 @Service
 public class LivroService {
@@ -22,9 +21,9 @@ public class LivroService {
         return livroRepository.findAll();
     }
 
-    public Livro buscarLivroPorId(Long id) throws LivroNaoEncontradoException {
+    public Livro buscarLivroPorId(Long id) throws ItemNaoEncontradoException {
         return livroRepository.findById(id).
-                orElseThrow(() -> new LivroNaoEncontradoException("Livro com o ID " + id + " não econtrado"));
+                orElseThrow(() -> new ItemNaoEncontradoException("Livro com o ID " + id + " não econtrado"));
     }
 
     public Livro salvarLivro(Livro livro) throws DadosAusentesException {
@@ -34,13 +33,13 @@ public class LivroService {
         return livroRepository.save(livro);
     }
 
-    public Livro atualizarLivro(Long id, Livro livroAtualizado) throws LivroNaoEncontradoException, DadosAusentesException {
+    public Livro atualizarLivro(Long id, Livro livroAtualizado) throws ItemNaoEncontradoException, DadosAusentesException {
         if(!livroRepository.existsById(id)) {
-            throw new LivroNaoEncontradoException("Livro com o ID " + id + " não encontrado");
+            throw new ItemNaoEncontradoException("Livro com o ID " + id + " não encontrado");
         }
 
         Livro livro = livroRepository.findById(id).
-                orElseThrow(() -> new LivroNaoEncontradoException("Livro com o ID " + id + " não econtrado"));
+                orElseThrow(() -> new ItemNaoEncontradoException("Livro com o ID " + id + " não econtrado"));
 
         if(this.findMissingData(livroAtualizado)) {
             throw new DadosAusentesException("Opa, algum campo não foi informado.");
@@ -52,9 +51,9 @@ public class LivroService {
         return livroRepository.save(livro);
     }
 
-    public void deletarLivro(Long id) throws LivroNaoEncontradoException {
+    public void deletarLivro(Long id) throws ItemNaoEncontradoException {
         if(!livroRepository.existsById(id)) {
-            throw new LivroNaoEncontradoException("Livro com o ID " + id + " não encontrado");
+            throw new ItemNaoEncontradoException("Livro com o ID " + id + " não encontrado");
         }
         livroRepository.deleteById(id);
     }
