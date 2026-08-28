@@ -1,5 +1,7 @@
 package com.example.livros.controller;
 
+import com.example.livros.exception.DadosAusentesException;
+import com.example.livros.exception.LivroNaoEncontradoException;
 import com.example.livros.model.Livro;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,25 +23,25 @@ public class LivroController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Livro buscarLivroPorId(@PathVariable Long id) {
+    public Livro buscarLivroPorId(@PathVariable Long id) throws LivroNaoEncontradoException {
         return livroService.buscarLivroPorId(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Livro salvarLivro(@RequestBody Livro livro) {
+    public Livro salvarLivro(@RequestBody Livro livro) throws DadosAusentesException {
         return livroService.salvarLivro(livro);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Livro atualizarLivro(@PathVariable Long id, @RequestBody Livro livro) {
+    public Livro atualizarLivro(@PathVariable Long id, @RequestBody Livro livro) throws LivroNaoEncontradoException, DadosAusentesException {
         return livroService.atualizarLivro(id, livro);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletarLivro(@PathVariable Long id) {
+    public void deletarLivro(@PathVariable Long id) throws LivroNaoEncontradoException {
         livroService.deletarLivro(id);
     }
 }
