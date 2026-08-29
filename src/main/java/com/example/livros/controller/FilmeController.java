@@ -27,4 +27,22 @@ public class FilmeController {
     public Filme buscarFilmePorId(@PathVariable Long id) throws ItemNaoEncontradoException {
         return filmeService.buscarFilmePorId(id);
     }
+
+    @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
+    public Filme salvarFilme(@RequestBody Filme filme) throws DadosAusentesException {
+        return filmeService.salvarFilme(filme);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Filme atualizarFilme(@PathVariable Long id, @RequestBody Filme filmeAtualizado) throws ItemNaoEncontradoException, DadosAusentesException {
+        return filmeService.atualizarFilme(id, filmeAtualizado);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletarFilme(@PathVariable Long id) throws ItemNaoEncontradoException {
+        filmeService.deletarFilme(id);
+    }
 }
