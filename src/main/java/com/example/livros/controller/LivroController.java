@@ -15,31 +15,31 @@ public class LivroController {
     @Autowired
     private LivroService livroService;
 
-    @GetMapping()
+    @GetMapping("/buscarLivros")
     @ResponseStatus(HttpStatus.OK)
     public List<Livro> buscarLivros() {
         return livroService.buscarLivros();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/buscarLivroPorId/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Livro buscarLivroPorId(@PathVariable Long id) throws EntidadeNaoEncontradaException {
         return livroService.buscarLivroPorId(id);
     }
 
-    @PostMapping
+    @PostMapping("/salvarLivro")
     @ResponseStatus(HttpStatus.CREATED)
     public Livro salvarLivro(@RequestBody Livro livro) throws DadosAusentesException {
         return livroService.salvarLivro(livro);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/atualizarLivro/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public Livro atualizarLivro(@PathVariable Long id, @RequestBody Livro livro) throws EntidadeNaoEncontradaException, DadosAusentesException {
         return livroService.atualizarLivro(id, livro);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deletarLivro/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletarLivro(@PathVariable Long id) throws EntidadeNaoEncontradaException {
         livroService.deletarLivro(id);

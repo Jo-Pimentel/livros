@@ -16,31 +16,31 @@ public class FilmeController {
     @Autowired
     private FilmeService filmeService;
 
-    @GetMapping
+    @GetMapping("/buscarFilmes")
     @ResponseStatus(HttpStatus.OK)
     public List<Filme> buscarFilmes() {
         return filmeService.buscarFilmes();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/buscarFilmePorId/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Filme buscarFilmePorId(@PathVariable Long id) throws EntidadeNaoEncontradaException {
         return filmeService.buscarFilmePorId(id);
     }
 
-    @PostMapping()
+    @PostMapping("/salvarFilme")
     @ResponseStatus(HttpStatus.CREATED)
     public Filme salvarFilme(@RequestBody Filme filme) throws DadosAusentesException {
         return filmeService.salvarFilme(filme);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/atualizarFilme/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public Filme atualizarFilme(@PathVariable Long id, @RequestBody Filme filmeAtualizado) throws EntidadeNaoEncontradaException, DadosAusentesException {
         return filmeService.atualizarFilme(id, filmeAtualizado);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deletarFilme/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletarFilme(@PathVariable Long id) throws EntidadeNaoEncontradaException {
         filmeService.deletarFilme(id);

@@ -29,7 +29,7 @@ public class AluguelController {
     @Autowired
     private FilmeService filmeService;
 
-    @GetMapping("/listagem")
+    @GetMapping("/buscarAlugueis")
     @ResponseStatus(HttpStatus.OK)
     public List<Aluguel> listarAlugueis() {
         return aluguelService.listarAlugueis();
@@ -38,7 +38,7 @@ public class AluguelController {
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public Aluguel salvarAluguel(@RequestBody Aluguel aluguel) throws ItemIndisponivelException, EntidadeNaoEncontradaException {
-        Aluno aluno = alunoService.buscarAlunoPorId(aluno.getId());
+        Aluno aluno = alunoService.buscarAlunoPorId(alunoService.buscarAlunoPorCpf());
         return aluguelService.realizarAluguel(aluguel);
     }
 }

@@ -41,20 +41,20 @@ public class AlunoService {
         return alunoRepository.save(aluno);
     }
 
-    public String alugarItem(String tipoItem, Long idItem, Long idAluno) throws ItemIndisponivelException, EntidadeNaoEncontradaException {
-        Item item;
+    public Aluno atualizarAluno(Long id, Aluno alunoAtualizado) throws EntidadeNaoEncontradaException, DadosAusentesException {
+        Aluno aluno = alunoRepository.findById(id)
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Aluno com o ID " + id + " não encontrado."));
 
-        if(tipoItem.equalsIgnoreCase("livro")) {
-            item = livroRepository.findById(idItem)
-                    .orElseThrow(() -> new EntidadeNaoEncontradaException("Livro com o ID " + idItem + " não encontrado."));
-        } else {
-            item = filmeRepository.findById(idItem)
-                    .orElseThrow(() -> new EntidadeNaoEncontradaException("Filme com o ID " + idItem + " não encontrado."));
+        aluno.setNome(alunoAtualizado.getNome());
+        aluno.setCpf(alunoAtualizado.getCpf());
+
+        return alunoRepository.save(aluno);
+    }
+
+    public void deletarAuno(Long id) throws EntidadeNaoEncontradaException {
+        if(!alunoRepository.existsById(id)) {
+            throw new EntidadeNaoEncontradaException("Auno com o ID " + id + " não encontrado.");
         }
-
-        Aluno aluno = alunoRepository.findById(idAluno)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException("Aluno com o ID " + idItem + " não encontrado."));
-
-        return "Item alugado com sucesso.";
+        alunoRepository.deleteById(id);
     }
 }

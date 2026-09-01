@@ -30,15 +30,16 @@ public class AluguelService {
     }
 
     public Aluguel realizarAluguel(Aluguel aluguel) throws ItemIndisponivelException, EntidadeNaoEncontradaException {
-        /*Item item;
+        Item item;
 
-        if(tipoItem.equalsIgnoreCase("livro")) {
-            item = livroRepository.findById(itemId)
+        if(aluguel.getTipoItem().equalsIgnoreCase("livro")) {
+            item = livroRepository.findByCodigoLivro(aluguel.get)
                     .orElseThrow(() -> new EntidadeNaoEncontradaException("Livro com o ID " + itemId + " não encontrado."));
         } else {
             item = filmeRepository.findById(itemId)
                     .orElseThrow(() -> new EntidadeNaoEncontradaException("Filme com o ID " + itemId + " não encontrado."));
-        }*/
+        }
+
         LocalDate dataAluguel = LocalDate.now();
         LocalDate dataDevolucao = LocalDate.now().plusWeeks(1);
         Boolean devolvido = false;
