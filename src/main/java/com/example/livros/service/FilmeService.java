@@ -1,7 +1,7 @@
 package com.example.livros.service;
 
 import com.example.livros.exception.DadosAusentesException;
-import com.example.livros.exception.ItemNaoEncontradoException;
+import com.example.livros.exception.EntidadeNaoEncontradaException;
 import com.example.livros.model.Filme;
 import com.example.livros.repository.FilmeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +21,9 @@ public class FilmeService {
         return filmeRepository.findAll();
     }
 
-    public Filme buscarFilmePorId(Long id) throws ItemNaoEncontradoException {
+    public Filme buscarFilmePorId(Long id) throws EntidadeNaoEncontradaException {
         return filmeRepository.findById(id)
-                .orElseThrow(() -> new ItemNaoEncontradoException("Filme com o ID " + id + " não encontrado."));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Filme com o ID " + id + " não encontrado."));
     }
 
     public Filme salvarFilme(Filme filme) throws DadosAusentesException {
@@ -33,13 +33,13 @@ public class FilmeService {
         return filmeRepository.save(filme);
     }
 
-    public Filme atualizarFilme(Long id, Filme filmeAtualizado) throws ItemNaoEncontradoException, DadosAusentesException {
+    public Filme atualizarFilme(Long id, Filme filmeAtualizado) throws EntidadeNaoEncontradaException, DadosAusentesException {
         if(!filmeRepository.existsById(id)) {
-            throw new ItemNaoEncontradoException("Filme com o ID " + id + " não encontrado");
+            throw new EntidadeNaoEncontradaException("Filme com o ID " + id + " não encontrado");
         }
 
         Filme filme = filmeRepository.findById(id)
-                .orElseThrow(() -> new ItemNaoEncontradoException("Filme com o ID " + id + " não encontrado."));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Filme com o ID " + id + " não encontrado."));
 
         if(findMissingData(filmeAtualizado)) {
             throw new DadosAusentesException("Opa, algum campo não foi informado.");
@@ -51,9 +51,9 @@ public class FilmeService {
         return filmeRepository.save(filme);
     }
 
-    public void deletarFilme(Long id) throws ItemNaoEncontradoException {
+    public void deletarFilme(Long id) throws EntidadeNaoEncontradaException {
         if(!filmeRepository.existsById(id)) {
-            throw new ItemNaoEncontradoException("Filme com o ID " + id + " não encontrado.");
+            throw new EntidadeNaoEncontradaException("Filme com o ID " + id + " não encontrado.");
         }
         filmeRepository.deleteById(id);
     }

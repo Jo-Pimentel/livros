@@ -1,7 +1,7 @@
 package com.example.livros.controller;
 
 import com.example.livros.exception.DadosAusentesException;
-import com.example.livros.exception.ItemNaoEncontradoException;
+import com.example.livros.exception.EntidadeNaoEncontradaException;
 import com.example.livros.model.Livro;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,8 +15,6 @@ public class LivroController {
     @Autowired
     private LivroService livroService;
 
-    /* CRUD de livros */
-
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     public List<Livro> buscarLivros() {
@@ -25,7 +23,7 @@ public class LivroController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Livro buscarLivroPorId(@PathVariable Long id) throws ItemNaoEncontradoException {
+    public Livro buscarLivroPorId(@PathVariable Long id) throws EntidadeNaoEncontradaException {
         return livroService.buscarLivroPorId(id);
     }
 
@@ -37,13 +35,13 @@ public class LivroController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Livro atualizarLivro(@PathVariable Long id, @RequestBody Livro livro) throws ItemNaoEncontradoException, DadosAusentesException {
+    public Livro atualizarLivro(@PathVariable Long id, @RequestBody Livro livro) throws EntidadeNaoEncontradaException, DadosAusentesException {
         return livroService.atualizarLivro(id, livro);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletarLivro(@PathVariable Long id) throws ItemNaoEncontradoException {
+    public void deletarLivro(@PathVariable Long id) throws EntidadeNaoEncontradaException {
         livroService.deletarLivro(id);
     }
 }

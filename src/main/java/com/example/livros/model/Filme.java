@@ -7,15 +7,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "filme")
+@DiscriminatorValue("filme")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Filme {
-    @Id
+public class Filme extends Item {
+    /*@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long id;*/
 
     @Column
     private String titulo;

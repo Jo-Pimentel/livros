@@ -1,13 +1,13 @@
 package com.example.livros.controller;
 
 import com.example.livros.exception.DadosAusentesException;
-import com.example.livros.exception.ItemNaoEncontradoException;
+import com.example.livros.exception.EntidadeNaoEncontradaException;
 import com.example.livros.model.Filme;
 import com.example.livros.service.FilmeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import com.example.livros.service.LivroService;
+
 import java.util.List;
 
 @RestController
@@ -24,7 +24,7 @@ public class FilmeController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Filme buscarFilmePorId(@PathVariable Long id) throws ItemNaoEncontradoException {
+    public Filme buscarFilmePorId(@PathVariable Long id) throws EntidadeNaoEncontradaException {
         return filmeService.buscarFilmePorId(id);
     }
 
@@ -36,13 +36,13 @@ public class FilmeController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Filme atualizarFilme(@PathVariable Long id, @RequestBody Filme filmeAtualizado) throws ItemNaoEncontradoException, DadosAusentesException {
+    public Filme atualizarFilme(@PathVariable Long id, @RequestBody Filme filmeAtualizado) throws EntidadeNaoEncontradaException, DadosAusentesException {
         return filmeService.atualizarFilme(id, filmeAtualizado);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletarFilme(@PathVariable Long id) throws ItemNaoEncontradoException {
+    public void deletarFilme(@PathVariable Long id) throws EntidadeNaoEncontradaException {
         filmeService.deletarFilme(id);
     }
 }
