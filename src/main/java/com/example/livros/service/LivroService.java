@@ -14,7 +14,7 @@ public class LivroService {
     private LivroRepository livroRepository;
 
     private boolean findMissingData(Livro livro) {
-        return livro.getTitulo() == null || livro.getAutor() == null;
+        return livro.getTitulo() == null || livro.getAutor() == null || livro.getCodigoItem() == null;
     }
 
     public List<Livro> buscarLivros() {
@@ -30,6 +30,7 @@ public class LivroService {
         if(this.findMissingData(livro)) {
             throw new DadosAusentesException("Opa, algum campo não foi informado.");
         }
+        livro.setTipoItem("LIVRO");
         return livroRepository.save(livro);
     }
 

@@ -1,5 +1,6 @@
 package com.example.livros.controller;
 
+import com.example.livros.dto.AluguelDto;
 import com.example.livros.exception.EntidadeNaoEncontradaException;
 import com.example.livros.exception.ItemIndisponivelException;
 import com.example.livros.model.Aluguel;
@@ -35,10 +36,10 @@ public class AluguelController {
         return aluguelService.listarAlugueis();
     }
 
-    @PostMapping()
+    @PostMapping("/realizarAluguel")
     @ResponseStatus(HttpStatus.CREATED)
-    public Aluguel salvarAluguel(@RequestBody Aluguel aluguel) throws ItemIndisponivelException, EntidadeNaoEncontradaException {
-        Aluno aluno = alunoService.buscarAlunoPorId(alunoService.buscarAlunoPorCpf());
-        return aluguelService.realizarAluguel(aluguel);
+    public Aluguel salvarAluguel(@RequestBody AluguelDto aluguelDto) throws ItemIndisponivelException, EntidadeNaoEncontradaException {
+        //Aluno aluno = alunoService.buscarAlunoPorId(alunoService.buscarAlunoPorCpf());
+        return aluguelService.realizarAluguel(aluguelDto);
     }
 }

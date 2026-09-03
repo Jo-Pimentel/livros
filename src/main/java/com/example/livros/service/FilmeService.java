@@ -14,7 +14,7 @@ public class FilmeService {
     private FilmeRepository filmeRepository;
 
     public boolean findMissingData(Filme filme) {
-        return filme.getTitulo() == null || filme.getDiretor() == null;
+        return filme.getTitulo() == null || filme.getDiretor() == null || filme.getCodigoItem() == null;
     }
 
     public List<Filme> buscarFilmes() {
@@ -30,6 +30,7 @@ public class FilmeService {
         if(findMissingData(filme)) {
             throw new DadosAusentesException("Opa, algum campo não foi informado!");
         }
+        filme.setTipoItem("FILME");
         return filmeRepository.save(filme);
     }
 
