@@ -18,25 +18,21 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-/*@JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.PROPERTY,
-        property = "tipoItem" // Deve bater com a chave usada dentro do objeto "item" no JSON
-)
-@JsonSubTypes({
-        @JsonSubTypes.Type(value = Livro.class, name = "LIVRO"),
-        @JsonSubTypes.Type(value = Filme.class, name = "FILME")
-})*/
 @JsonIgnoreProperties({"aluguel"})
 public abstract class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    @Column(name = "titulo")
+    private String titulo;
+
+    @Column(name = "ano_publicacao")
+    private Integer anoPublicacao;
+
     @Column(name = "codigo_item", nullable = false, unique = true)
     private String codigoItem;
 
-    @JsonIgnoreProperties({"aluno", "item"})
     @OneToOne(mappedBy = "item")
     private Aluguel aluguel;
 

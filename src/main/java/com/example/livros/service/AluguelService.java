@@ -71,7 +71,15 @@ public class AluguelService {
     public String devolucao(Long id) {
         Aluguel aluguel = aluguelRepository.getById(id);
         aluguel.setDevolvido(true);
+        aluguel.setDevolvidoEm(LocalDate.now());
         aluguelRepository.save(aluguel);
-        return "Item devolvido com sucesso.";
+        return aluguel.getItem().getTitulo() + " devolvido com sucesso.";
+    }
+
+    public String prorrogarDevolucao(Long id) {
+        Aluguel aluguel = aluguelRepository.getById(id);
+        aluguel.setDataDevolucao(aluguel.getDataDevolucao().plusWeeks(1));
+        aluguelRepository.save(aluguel);
+        return "A devolução de " + aluguel.getItem().getTitulo() + " foi prorrogada para " + aluguel.getDataDevolucao();
     }
 }

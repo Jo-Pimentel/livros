@@ -13,15 +13,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-//@JsonTypeName("LIVRO")
 public class Filme extends Item {
-    /*@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;*/
-
-    @Column
-    private String titulo;
-
-    @Column
+    @Column(name = "diretor")
     private String diretor;
+
+    @Column(name = "duracao_em_minutos")
+    private Integer duracaoEmMinutos;
 }

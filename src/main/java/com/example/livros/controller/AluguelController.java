@@ -8,7 +8,6 @@ import com.example.livros.service.AluguelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -36,9 +35,15 @@ public class AluguelController {
         return aluguelService.realizarAluguel(aluguelDto);
     }
 
-    @PutMapping("/devolucao/{idAluguel}")
+    @PutMapping("/devolucao/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public String devolucao(@PathVariable Long idAluguel) {
-        return aluguelService.devolucao(idAluguel);
+    public String devolucao(@PathVariable Long id) {
+        return aluguelService.devolucao(id);
+    }
+
+    @PutMapping("/prorrogarDevolucao/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public String prorrogarDevolucao(@PathVariable Long id) {
+        return aluguelService.prorrogarDevolucao(id);
     }
 }
