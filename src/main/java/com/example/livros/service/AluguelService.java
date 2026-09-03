@@ -35,6 +35,11 @@ public class AluguelService {
         return aluguelRepository.findAll();
     }
 
+    public Aluguel buscarAluguelEspecifico(Long id) throws EntidadeNaoEncontradaException {
+        return aluguelRepository.findById(id)
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Aluguel com o ID " + id + " não encontrado."));
+    }
+
     public Aluguel realizarAluguel(AluguelDto aluguelDto) throws ItemIndisponivelException, EntidadeNaoEncontradaException {
         Aluguel aluguel = new Aluguel();
         Item item;
@@ -61,5 +66,12 @@ public class AluguelService {
         aluguel.setDevolvido(devolvido);
 
         return aluguelRepository.save(aluguel);
+    }
+
+    public String devolucao(Long id) {
+        Aluguel aluguel = aluguelRepository.getById(id);
+        aluguel.setDevolvido(true);
+        aluguelRepository.save(aluguel);
+        return "Item devolvido com sucesso.";
     }
 }

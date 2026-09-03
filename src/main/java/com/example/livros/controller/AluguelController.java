@@ -4,11 +4,7 @@ import com.example.livros.dto.AluguelDto;
 import com.example.livros.exception.EntidadeNaoEncontradaException;
 import com.example.livros.exception.ItemIndisponivelException;
 import com.example.livros.model.Aluguel;
-import com.example.livros.model.Aluno;
 import com.example.livros.service.AluguelService;
-import com.example.livros.service.AlunoService;
-import com.example.livros.service.FilmeService;
-import com.example.livros.service.LivroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -21,19 +17,16 @@ public class AluguelController {
     @Autowired
     private AluguelService aluguelService;
 
-    @Autowired
-    private AlunoService alunoService;
-
-    @Autowired
-    private LivroService livroService;
-
-    @Autowired
-    private FilmeService filmeService;
-
     @GetMapping("/buscarAlugueis")
     @ResponseStatus(HttpStatus.OK)
     public List<Aluguel> listarAlugueis() {
         return aluguelService.listarAlugueis();
+    }
+
+    @GetMapping("/buscarAluguelEspecifico/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Aluguel buscarAluguelEspecifico(@PathVariable Long id) throws EntidadeNaoEncontradaException {
+        return aluguelService.buscarAluguelEspecifico(id);
     }
 
     @PostMapping("/realizarAluguel")
@@ -41,5 +34,11 @@ public class AluguelController {
     public Aluguel salvarAluguel(@RequestBody AluguelDto aluguelDto) throws ItemIndisponivelException, EntidadeNaoEncontradaException {
         //Aluno aluno = alunoService.buscarAlunoPorId(alunoService.buscarAlunoPorCpf());
         return aluguelService.realizarAluguel(aluguelDto);
+    }
+
+    @PutMapping("/devolucao/{idAluguel}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public String devolucao(@PathVariable Long idAluguel) {
+        return aluguelService.devolucao(idAluguel);
     }
 }
