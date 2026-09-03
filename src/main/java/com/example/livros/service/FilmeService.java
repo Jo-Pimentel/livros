@@ -48,6 +48,8 @@ public class FilmeService {
 
         filme.setTitulo(filmeAtualizado.getTitulo());
         filme.setDiretor(filmeAtualizado.getDiretor());
+        filme.setAnoPublicacao(filmeAtualizado.getAnoPublicacao());
+        filme.setCodigoItem(filmeAtualizado.getCodigoItem());
 
         return filmeRepository.save(filme);
     }

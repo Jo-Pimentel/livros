@@ -48,6 +48,9 @@ public class LivroService {
 
         livro.setTitulo(livroAtualizado.getTitulo());
         livro.setAutor(livroAtualizado.getAutor());
+        livro.setEditora(livroAtualizado.getEditora());
+        livro.setQtdPaginas(livroAtualizado.getQtdPaginas());
+        livro.setAnoPublicacao(livroAtualizado.getAnoPublicacao());
 
         return livroRepository.save(livro);
     }
