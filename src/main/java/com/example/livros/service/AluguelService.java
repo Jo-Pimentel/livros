@@ -52,7 +52,7 @@ public class AluguelService {
                     .orElseThrow(() -> new EntidadeNaoEncontradaException("Livro com o ID " + aluguelDto.getIdItem() + " não encontrado."));
         }
 
-        Aluno aluno = alunoRepository.findById(aluguelDto.getIdItem())
+        Aluno aluno = alunoRepository.findById(aluguelDto.getIdAluno())
                 .orElseThrow(() -> new EntidadeNaoEncontradaException("Aluno com o ID " + aluguelDto.getIdItem() + " não encontrado."));
 
         LocalDate dataAluguel = LocalDate.now();
@@ -68,16 +68,26 @@ public class AluguelService {
         return aluguelRepository.save(aluguel);
     }
 
-    public String devolucao(Long id) {
+    public String devolucao(Long id) throws ItemIndisponivelException {
         Aluguel aluguel = aluguelRepository.getById(id);
+
+        if(aluguel.getDevolvido()) {
+            throw new ItemIndisponivelException(aluguel.getItem().getTitulo() + " não está alugado no momento.");
+        }
+
         aluguel.setDevolvido(true);
         aluguel.setDevolvidoEm(LocalDate.now());
         aluguelRepository.save(aluguel);
         return aluguel.getItem().getTitulo() + " devolvido com sucesso.";
     }
 
-    public String prorrogarDevolucao(Long id) {
+    public String prorrogarDevolucao(Long id) throws ItemIndisponivelException {
         Aluguel aluguel = aluguelRepository.getById(id);
+
+        if(aluguel.getDevolvido()) {
+            throw new ItemIndisponivelException(aluguel.getItem().getTitulo() + " não está alugado no momento.");
+        }
+
         aluguel.setDataDevolucao(aluguel.getDataDevolucao().plusWeeks(1));
         aluguelRepository.save(aluguel);
         return "A devolução de " + aluguel.getItem().getTitulo() + " foi prorrogada para " + aluguel.getDataDevolucao();

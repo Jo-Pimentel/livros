@@ -15,8 +15,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Aluguel {
-    //@JsonIgnoreProperties({"aluno", "item"})
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // ID próprio da tabela de aluguel
@@ -41,7 +39,7 @@ public class Aluguel {
     private LocalDate dataDevolucao;
 
     @Column(name = "devolvido")
-    private boolean devolvido = false;
+    private Boolean devolvido = false;
 
     @Column(name = "devolvido_em")
     private LocalDate devolvidoEm;

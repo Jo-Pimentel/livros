@@ -37,13 +37,13 @@ public class AluguelController {
 
     @PutMapping("/devolucao/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public String devolucao(@PathVariable Long id) {
+    public String devolucao(@PathVariable Long id) throws ItemIndisponivelException {
         return aluguelService.devolucao(id);
     }
 
     @PutMapping("/prorrogarDevolucao/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public String prorrogarDevolucao(@PathVariable Long id) {
+    public String prorrogarDevolucao(@PathVariable Long id) throws ItemIndisponivelException {
         return aluguelService.prorrogarDevolucao(id);
     }
 }
