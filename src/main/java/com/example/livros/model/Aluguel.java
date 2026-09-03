@@ -1,5 +1,6 @@
 package com.example.livros.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,6 +15,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Aluguel {
+    //@JsonIgnoreProperties({"aluno", "item"})
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // ID próprio da tabela de aluguel

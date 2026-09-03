@@ -1,5 +1,7 @@
 package com.example.livros.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.persistence.*;
@@ -25,6 +27,7 @@ import lombok.Setter;
         @JsonSubTypes.Type(value = Livro.class, name = "LIVRO"),
         @JsonSubTypes.Type(value = Filme.class, name = "FILME")
 })*/
+@JsonIgnoreProperties({"aluguel"})
 public abstract class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -33,6 +36,7 @@ public abstract class Item {
     @Column(name = "codigo_item", nullable = false, unique = true)
     private String codigoItem;
 
+    @JsonIgnoreProperties({"aluno", "item"})
     @OneToOne(mappedBy = "item")
     private Aluguel aluguel;
 
