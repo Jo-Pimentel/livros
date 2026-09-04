@@ -30,11 +30,11 @@ public class Aluno {
 
     @ManyToOne
     @JoinColumn(name = "item_id")
-    @JsonIgnoreProperties({"aluno", "aluguel"}) // Chave estrangeira para Person
+    @JsonIgnoreProperties({"alunosLocatarios", "aluguel"}) // Chave estrangeira para Person
     private Item item;
 
     // Opcional: Se quiser navegar do Aluno para o Aluguel
-    @OneToMany(mappedBy = "aluguel")
+    @OneToMany(mappedBy = "aluno")
     @JsonIgnoreProperties({"aluno", "item"})
     //@Column(name = "aluguel")
     private List<Aluguel> aluguel;

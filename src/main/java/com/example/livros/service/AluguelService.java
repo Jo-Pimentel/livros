@@ -13,6 +13,7 @@ import com.example.livros.repository.FilmeRepository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AluguelService {
@@ -40,27 +41,33 @@ public class AluguelService {
     public Aluguel realizarAluguel(AluguelDto aluguelDto) throws ItemIndisponivelException, EntidadeNaoEncontradaException {
         Aluguel aluguel = new Aluguel();
         //Item item;
+        //Optional<Item> optionalItem;
+
+        Aluno aluno = alunoRepository.findById(aluguelDto.getIdAluno())
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Aluno com o ID " + aluguelDto.getIdItem() + " não encontrado."));
+
+        aluguel.setAluno(aluno);
 
         if(aluguelDto.getTipoItem().equalsIgnoreCase("LIVRO")) {
             Livro item = livroRepository.findById(aluguelDto.getIdItem())
                     .orElseThrow(() -> new EntidadeNaoEncontradaException("Livro com o ID " + aluguelDto.getIdItem() + " não encontrado."));
-            livroRepository.save(item);
+            //item.getAlunosLocatarios().add(aluno);
+            aluguel.getAluno().setItem(item);
             aluguel.setItem(item);
+            livroRepository.save(item);
         } else {
             Filme item = filmeRepository.findById(aluguelDto.getIdItem())
                     .orElseThrow(() -> new EntidadeNaoEncontradaException("Livro com o ID " + aluguelDto.getIdItem() + " não encontrado."));
-            filmeRepository.save(item);
+            //item.getAlunosLocatarios().add(aluno);
+            aluguel.getAluno().setItem(item);
             aluguel.setItem(item);
+            filmeRepository.save(item);
         }
-
-        Aluno aluno = alunoRepository.findById(aluguelDto.getIdAluno())
-                .orElseThrow(() -> new EntidadeNaoEncontradaException("Aluno com o ID " + aluguelDto.getIdItem() + " não encontrado."));
 
         LocalDate dataAluguel = LocalDate.now();
         LocalDate dataDevolucao = LocalDate.now().plusWeeks(1);
         Boolean devolvido = false;
 
-        aluguel.setAluno(aluno);
         aluguel.setDataAluguel(dataAluguel);
         aluguel.setDataDevolucao(dataDevolucao);
         aluguel.setDevolvido(devolvido);

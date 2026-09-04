@@ -22,11 +22,13 @@ public class Aluguel {
     // Aponta para a Entidade Aluno usando o campo 'cpf' (que tem unique=true em Aluno)
     @ManyToOne
     @JoinColumn(name = "id_aluno", referencedColumnName = "id")
+    @JsonIgnoreProperties({"item", "aluguel"})
     private Aluno aluno;
 
     // Aponta para a Entidade Item usando o campo 'codigoItem' (que tem unique=true em Item)
     @ManyToOne
     @JoinColumn(name = "id_item", referencedColumnName = "id")
+    @JsonIgnoreProperties({"alunosLocatarios", "aluguel"})
     private Item item;
 
     @Column(name = "data_aluguel")

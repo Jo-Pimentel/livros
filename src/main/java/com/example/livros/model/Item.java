@@ -46,6 +46,7 @@ public abstract class Item {
     private Integer qtdExemplaresDisponiveis;
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @Column(name = "alunos_locatarios")
+    @JsonIgnoreProperties({"item", "aluguel"})
+    //@Column(name = "alunos_locatarios")
     private List<Aluno> alunosLocatarios;
 }
