@@ -20,17 +20,14 @@ public class Aluguel {
     private Long id; // ID próprio da tabela de aluguel
 
     // Aponta para a Entidade Aluno usando o campo 'cpf' (que tem unique=true em Aluno)
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "id_aluno", referencedColumnName = "id")
     private Aluno aluno;
 
     // Aponta para a Entidade Item usando o campo 'codigoItem' (que tem unique=true em Item)
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "id_item", referencedColumnName = "id")
     private Item item;
-
-    /*@Column(name = "tipo_item")
-    private String tipoItem;*/
 
     @Column(name = "data_aluguel")
     private LocalDate dataAluguel;

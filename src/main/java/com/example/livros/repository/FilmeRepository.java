@@ -1,5 +1,6 @@
 package com.example.livros.repository;
 
+import com.example.livros.model.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.livros.model.Filme;
 import org.springframework.data.jpa.repository.Query;

@@ -3,10 +3,7 @@ package com.example.livros.service;
 import com.example.livros.dto.AluguelDto;
 import com.example.livros.exception.EntidadeNaoEncontradaException;
 import com.example.livros.exception.ItemIndisponivelException;
-import com.example.livros.model.Aluguel;
-import com.example.livros.model.Aluno;
-import com.example.livros.model.Filme;
-import com.example.livros.model.Item;
+import com.example.livros.model.*;
 import com.example.livros.repository.AluguelRepository;
 import com.example.livros.repository.AlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,14 +39,18 @@ public class AluguelService {
 
     public Aluguel realizarAluguel(AluguelDto aluguelDto) throws ItemIndisponivelException, EntidadeNaoEncontradaException {
         Aluguel aluguel = new Aluguel();
-        Item item;
+        //Item item;
 
         if(aluguelDto.getTipoItem().equalsIgnoreCase("LIVRO")) {
-            item = livroRepository.findById(aluguelDto.getIdItem())
+            Livro item = livroRepository.findById(aluguelDto.getIdItem())
                     .orElseThrow(() -> new EntidadeNaoEncontradaException("Livro com o ID " + aluguelDto.getIdItem() + " não encontrado."));
+            livroRepository.save(item);
+            aluguel.setItem(item);
         } else {
-            item = filmeRepository.findById(aluguelDto.getIdItem())
+            Filme item = filmeRepository.findById(aluguelDto.getIdItem())
                     .orElseThrow(() -> new EntidadeNaoEncontradaException("Livro com o ID " + aluguelDto.getIdItem() + " não encontrado."));
+            filmeRepository.save(item);
+            aluguel.setItem(item);
         }
 
         Aluno aluno = alunoRepository.findById(aluguelDto.getIdAluno())
@@ -60,7 +61,6 @@ public class AluguelService {
         Boolean devolvido = false;
 
         aluguel.setAluno(aluno);
-        aluguel.setItem(item);
         aluguel.setDataAluguel(dataAluguel);
         aluguel.setDataDevolucao(dataDevolucao);
         aluguel.setDevolvido(devolvido);
@@ -68,15 +68,27 @@ public class AluguelService {
         return aluguelRepository.save(aluguel);
     }
 
-    public String devolucao(Long id) throws ItemIndisponivelException {
+    public String devolucao(Long id) throws ItemIndisponivelException, EntidadeNaoEncontradaException {
         Aluguel aluguel = aluguelRepository.getById(id);
 
         if(aluguel.getDevolvido()) {
             throw new ItemIndisponivelException(aluguel.getItem().getTitulo() + " não está alugado no momento.");
         }
 
+        if(aluguel.getItem().getTipoItem().equalsIgnoreCase("LIVRO")) {
+            Livro livro = livroRepository.findById(aluguel.getItem().getId())
+                    .orElseThrow();
+            livroRepository.save(livro);
+        } else {
+            Filme filme = filmeRepository.findById(aluguel.getItem().getId())
+                    .orElseThrow();
+            filmeRepository.save(filme);
+        }
+
         aluguel.setDevolvido(true);
         aluguel.setDevolvidoEm(LocalDate.now());
+        aluguel.getAluno().setItem(null);
+        alunoRepository.save(aluguel.getAluno());
         aluguelRepository.save(aluguel);
         return aluguel.getItem().getTitulo() + " devolvido com sucesso.";
     }

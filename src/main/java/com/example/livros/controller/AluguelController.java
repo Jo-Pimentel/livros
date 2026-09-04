@@ -37,7 +37,7 @@ public class AluguelController {
 
     @PutMapping("/devolucao/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public String devolucao(@PathVariable Long id) throws ItemIndisponivelException {
+    public String devolucao(@PathVariable Long id) throws ItemIndisponivelException, EntidadeNaoEncontradaException {
         return aluguelService.devolucao(id);
     }
 

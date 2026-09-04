@@ -7,13 +7,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name = "aluno")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties({"aluguel"})
+//@JsonIgnoreProperties({"aluguel"})
 public class Aluno {
 
     @Id
@@ -26,7 +28,14 @@ public class Aluno {
     @Column(name = "cpf_aluno", nullable = false, unique = true)
     private String cpf;
 
+    @ManyToOne
+    @JoinColumn(name = "item_id")
+    @JsonIgnoreProperties({"aluno", "aluguel"}) // Chave estrangeira para Person
+    private Item item;
+
     // Opcional: Se quiser navegar do Aluno para o Aluguel
-    @OneToOne(mappedBy = "aluno")
-    private Aluguel aluguel;
+    @OneToMany(mappedBy = "aluguel")
+    @JsonIgnoreProperties({"aluno", "item"})
+    //@Column(name = "aluguel")
+    private List<Aluguel> aluguel;
 }

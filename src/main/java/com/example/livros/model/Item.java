@@ -10,6 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name = "item")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -18,7 +20,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties({"aluguel"})
+//@JsonIgnoreProperties({"aluguel"})
 public abstract class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -33,9 +35,17 @@ public abstract class Item {
     @Column(name = "codigo_item", nullable = false, unique = true)
     private String codigoItem;
 
-    @OneToOne(mappedBy = "item")
-    private Aluguel aluguel;
+    @OneToMany(mappedBy = "item")
+    @JsonIgnoreProperties({"aluno", "item"})
+    private List<Aluguel> aluguel;
 
     @Column(name = "tipo_item")
     private String tipoItem;
+
+    @Column(name = "qtd_exemplares_disponiveis")
+    private Integer qtdExemplaresDisponiveis;
+
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Column(name = "alunos_locatarios")
+    private List<Aluno> alunosLocatarios;
 }
