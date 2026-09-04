@@ -10,10 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.livros.repository.LivroRepository;
 import com.example.livros.repository.FilmeRepository;
-
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AluguelService {
@@ -40,8 +38,6 @@ public class AluguelService {
 
     public Aluguel realizarAluguel(AluguelDto aluguelDto) throws ItemIndisponivelException, EntidadeNaoEncontradaException {
         Aluguel aluguel = new Aluguel();
-        //Item item;
-        //Optional<Item> optionalItem;
 
         Aluno aluno = alunoRepository.findById(aluguelDto.getIdAluno())
                 .orElseThrow(() -> new EntidadeNaoEncontradaException("Aluno com o ID " + aluguelDto.getIdItem() + " não encontrado."));
@@ -51,28 +47,29 @@ public class AluguelService {
         if(aluguelDto.getTipoItem().equalsIgnoreCase("LIVRO")) {
             Livro item = livroRepository.findById(aluguelDto.getIdItem())
                     .orElseThrow(() -> new EntidadeNaoEncontradaException("Livro com o ID " + aluguelDto.getIdItem() + " não encontrado."));
-            //item.getAlunosLocatarios().add(aluno);
             aluguel.getAluno().setItem(item);
             aluguel.setItem(item);
             livroRepository.save(item);
         } else {
             Filme item = filmeRepository.findById(aluguelDto.getIdItem())
                     .orElseThrow(() -> new EntidadeNaoEncontradaException("Livro com o ID " + aluguelDto.getIdItem() + " não encontrado."));
-            //item.getAlunosLocatarios().add(aluno);
             aluguel.getAluno().setItem(item);
             aluguel.setItem(item);
             filmeRepository.save(item);
         }
 
-        LocalDate dataAluguel = LocalDate.now();
-        LocalDate dataDevolucao = LocalDate.now().plusWeeks(1);
-        Boolean devolvido = false;
+        if(aluguel.getItem().getQtdExemplaresDisponiveis() == 0) {
+            throw new ItemIndisponivelException("Nenhuma cópia de " + aluguel.getItem().getTitulo() + " disponível para aluguel.");
+        } else {
+            LocalDate dataAluguel = LocalDate.now();
+            LocalDate dataDevolucao = LocalDate.now().plusWeeks(1);
 
-        aluguel.setDataAluguel(dataAluguel);
-        aluguel.setDataDevolucao(dataDevolucao);
-        aluguel.setDevolvido(devolvido);
+            aluguel.getItem().setQtdExemplaresDisponiveis(aluguel.getItem().getQtdExemplaresDisponiveis() - 1);
+            aluguel.setDataAluguel(dataAluguel);
+            aluguel.setDataDevolucao(dataDevolucao);
 
-        return aluguelRepository.save(aluguel);
+            return aluguelRepository.save(aluguel);
+        }
     }
 
     public String devolucao(Long id) throws ItemIndisponivelException, EntidadeNaoEncontradaException {
@@ -92,6 +89,7 @@ public class AluguelService {
             filmeRepository.save(filme);
         }
 
+        aluguel.getItem().setQtdExemplaresDisponiveis(aluguel.getItem().getQtdExemplaresDisponiveis() + 1);
         aluguel.setDevolvido(true);
         aluguel.setDevolvidoEm(LocalDate.now());
         aluguel.getAluno().setItem(null);
