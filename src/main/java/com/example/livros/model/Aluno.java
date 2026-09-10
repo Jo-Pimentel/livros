@@ -25,7 +25,7 @@ public class Aluno {
     @Column(name = "nome")
     private String nome;
 
-    @Column(name = "cpf_aluno", nullable = false, unique = true)
+    @Column(name = "cpf", nullable = false, unique = true)
     private String cpf;
 
     @ManyToOne

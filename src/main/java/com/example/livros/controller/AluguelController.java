@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/biblioteca/alugueis")
+//@CrossOrigin(origins = "http://localhost:3000")
 public class AluguelController {
     @Autowired
     private AluguelService aluguelService;
