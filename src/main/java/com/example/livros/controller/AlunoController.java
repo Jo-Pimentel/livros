@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/biblioteca/alunos")
-//@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AlunoController {
     @Autowired
     private AlunoService alunoService;
@@ -28,6 +28,12 @@ public class AlunoController {
         return alunoService.buscarAlunoPorId(id);
     }
 
+    @GetMapping("/buscarAlunoPorCpf/{cpf}")
+    @ResponseStatus(HttpStatus.OK)
+    public Aluno buscarAlunoPorCpf(@PathVariable String cpf) throws EntidadeNaoEncontradaException {
+        return alunoService.buscarAlunoPorCpf(cpf);
+    }
+
     @PostMapping("/salvarAluno")
     @ResponseStatus(HttpStatus.CREATED)
     public Aluno salvarAluno(@RequestBody Aluno aluno) throws DadosAusentesException {
@@ -40,9 +46,15 @@ public class AlunoController {
         return alunoService.atualizarAluno(id, aluno);
     }
 
+    @PutMapping("/atualizarAlunoPorCpf/{cpf}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Aluno atualizarAlunoPorId(@PathVariable String cpf, @RequestBody Aluno aluno) throws EntidadeNaoEncontradaException, DadosAusentesException {
+        return alunoService.atualizarAlunoPorCpf(cpf, aluno);
+    }
+
     @DeleteMapping("/deletarAluno/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletarAluno(@PathVariable Long id) throws EntidadeNaoEncontradaException {
-        alunoService.deletarAuno(id);
+        alunoService.deletarAluno(id);
     }
 }

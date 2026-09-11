@@ -34,6 +34,14 @@ public class AlunoService {
                 .orElseThrow(() -> new EntidadeNaoEncontradaException("Aluno com o ID " + id + " não encontrado."));
     }
 
+    public Aluno buscarAlunoPorCpf(String cpf) throws EntidadeNaoEncontradaException {
+        if(alunoRepository.findByCpf(cpf) == null) {
+            throw new EntidadeNaoEncontradaException("Aluno com o CPF " + cpf + " não encontrado.");
+        } else {
+            return alunoRepository.findByCpf(cpf);
+        }
+    }
+
     public Aluno salvarAluno(Aluno aluno) throws DadosAusentesException {
         if(aluno.getNome() == null) {
             throw new DadosAusentesException("Opa! Nome do aluno não informado.");
@@ -51,7 +59,16 @@ public class AlunoService {
         return alunoRepository.save(aluno);
     }
 
-    public void deletarAuno(Long id) throws EntidadeNaoEncontradaException {
+    public Aluno atualizarAlunoPorCpf(String cpf, Aluno alunoAtualizado) throws EntidadeNaoEncontradaException, DadosAusentesException {
+        Aluno aluno = this.buscarAlunoPorCpf(cpf);
+
+        aluno.setNome(alunoAtualizado.getNome());
+        aluno.setCpf(alunoAtualizado.getCpf());
+
+        return alunoRepository.save(aluno);
+    }
+
+    public void deletarAluno(Long id) throws EntidadeNaoEncontradaException {
         if(!alunoRepository.existsById(id)) {
             throw new EntidadeNaoEncontradaException("Auno com o ID " + id + " não encontrado.");
         }
