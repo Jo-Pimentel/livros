@@ -14,7 +14,7 @@ public class LivroService {
     private LivroRepository livroRepository;
 
     private boolean findMissingData(Livro livro) {
-        return livro.getTitulo() == null || livro.getAutor() == null || livro.getCodigoItem() == null;
+        return livro.getTitulo() == null || livro.getAutor() == null;
     }
 
     public List<Livro> buscarLivros() {

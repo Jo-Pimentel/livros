@@ -36,6 +36,9 @@ public class Aluno {
     // Opcional: Se quiser navegar do Aluno para o Aluguel
     @OneToMany(mappedBy = "aluno")
     @JsonIgnoreProperties({"aluno", "item"})
-    //@Column(name = "aluguel")
+    @Column(name = "aluguel")
     private List<Aluguel> aluguel;
+
+    @Column(name = "alugando")
+    private Boolean alugando = false;
 }

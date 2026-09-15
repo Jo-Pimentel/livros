@@ -14,7 +14,7 @@ public class FilmeService {
     private FilmeRepository filmeRepository;
 
     public boolean findMissingData(Filme filme) {
-        return filme.getTitulo() == null || filme.getDiretor() == null || filme.getCodigoItem() == null;
+        return filme.getTitulo() == null || filme.getDiretor() == null;
     }
 
     public List<Filme> buscarFilmes() {

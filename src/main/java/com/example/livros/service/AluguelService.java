@@ -67,6 +67,7 @@ public class AluguelService {
             aluguel.getItem().setQtdExemplaresDisponiveis(aluguel.getItem().getQtdExemplaresDisponiveis() - 1);
             aluguel.setDataAluguel(dataAluguel);
             aluguel.setDataDevolucao(dataDevolucao);
+            aluguel.getAluno().setAlugando(true);
 
             return aluguelRepository.save(aluguel);
         }
@@ -92,6 +93,7 @@ public class AluguelService {
         aluguel.getItem().setQtdExemplaresDisponiveis(aluguel.getItem().getQtdExemplaresDisponiveis() + 1);
         aluguel.setDevolvido(true);
         aluguel.setDevolvidoEm(LocalDate.now());
+        aluguel.getAluno().setAlugando(false);
         aluguel.getAluno().setItem(null);
         alunoRepository.save(aluguel.getAluno());
         aluguelRepository.save(aluguel);

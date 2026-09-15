@@ -27,7 +27,7 @@ public abstract class Item {
     @Column(name = "ano_publicacao")
     private Integer anoPublicacao;
 
-    @Column(name = "codigo_item", nullable = false, unique = true)
+    @Column(name = "codigo_item", unique = true)
     private String codigoItem;
 
     @OneToMany(mappedBy = "item")
