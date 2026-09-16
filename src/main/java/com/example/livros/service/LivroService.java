@@ -26,11 +26,21 @@ public class LivroService {
                 orElseThrow(() -> new EntidadeNaoEncontradaException("Livro com o ID " + id + " não econtrado"));
     }
 
+    public Livro buscarLivroPorCodigoItem(String codigoItem) throws EntidadeNaoEncontradaException {
+        if(livroRepository.findByCodigoLivro(codigoItem) == null) {
+            throw new EntidadeNaoEncontradaException("Livro com o código " + codigoItem + " não encontrado.");
+        } else {
+            return livroRepository.findByCodigoLivro(codigoItem);
+        }
+    }
+
     public Livro salvarLivro(Livro livro) throws DadosAusentesException {
         if(this.findMissingData(livro)) {
             throw new DadosAusentesException("Opa, algum campo não foi informado.");
         }
         livro.setTipoItem("LIVRO");
+        int numero = this.buscarLivros().size();
+        livro.setCodigoItem("LIV_" + (numero + 1));
         return livroRepository.save(livro);
     }
 

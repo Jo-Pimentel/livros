@@ -29,6 +29,12 @@ public class FilmeController {
         return filmeService.buscarFilmePorId(id);
     }
 
+    @GetMapping("/buscarFilmePorCodigoItem/{codigoItem}")
+    @ResponseStatus(HttpStatus.OK)
+    public Filme buscarFilmePorCodigoItem(@PathVariable String codigoItem) throws EntidadeNaoEncontradaException {
+        return filmeService.buscarFilmePorCodigoItem(codigoItem);
+    }
+
     @PostMapping("/salvarFilme")
     @ResponseStatus(HttpStatus.CREATED)
     public Filme salvarFilme(@RequestBody Filme filme) throws DadosAusentesException {

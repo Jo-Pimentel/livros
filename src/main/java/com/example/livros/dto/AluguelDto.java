@@ -8,6 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 public class AluguelDto {
     private Long idAluno;
-    private Long idItem;
+    private String codigoItem;
     private String tipoItem;
 }

@@ -28,6 +28,12 @@ public class LivroController {
         return livroService.buscarLivroPorId(id);
     }
 
+    @GetMapping("/buscarLivroPorCodigoItem/{codigoItem}")
+    @ResponseStatus(HttpStatus.OK)
+    public Livro buscarLivroPorCodigoItem(@PathVariable String codigoItem) throws EntidadeNaoEncontradaException {
+        return livroService.buscarLivroPorCodigoItem(codigoItem);
+    }
+
     @PostMapping("/salvarLivro")
     @ResponseStatus(HttpStatus.CREATED)
     public Livro salvarLivro(@RequestBody Livro livro) throws DadosAusentesException {
