@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AluguelDto {
-    private Long idAluno;
-    private String codigoItem;
+    private String cpfAluno;
+    private Long idItem;
     private String tipoItem;
 }

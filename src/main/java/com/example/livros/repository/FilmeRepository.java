@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FilmeRepository extends JpaRepository<Filme, Long> {
-    @Query(value = "SELECT * FROM filme WHERE codigo_item = ?", nativeQuery = true)
+    @Query(value = "SELECT * FROM filme WHERE codigo_item = :codigo_item", nativeQuery = true)
     Filme findByCodigoFilme(String codigoFilme);
 }

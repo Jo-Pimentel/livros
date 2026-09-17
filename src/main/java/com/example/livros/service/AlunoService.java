@@ -25,6 +25,10 @@ public class AlunoService {
     @Autowired
     private FilmeRepository filmeRepository;
 
+    /*public boolean cpfValido(String cpf) {
+        Lis<>
+    }*/
+
     public List<Aluno> buscarAlunos() {
         return alunoRepository.findAll();
     }

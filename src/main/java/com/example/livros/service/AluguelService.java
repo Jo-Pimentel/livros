@@ -39,27 +39,26 @@ public class AluguelService {
     public Aluguel realizarAluguel(AluguelDto aluguelDto) throws ItemIndisponivelException, EntidadeNaoEncontradaException {
         Aluguel aluguel = new Aluguel();
 
-        Aluno aluno = alunoRepository.findById(aluguelDto.getIdAluno())
-                .orElseThrow(() -> new EntidadeNaoEncontradaException("Aluno com o ID " + aluguelDto.getIdAluno() + " não encontrado."));
+        if(alunoRepository.findByCpf(aluguelDto.getCpfAluno()) == null) {
+            throw new EntidadeNaoEncontradaException("Aluno com o CPF " + aluguelDto.getCpfAluno() + " não encontrado.");
+        }
+
+        Aluno aluno = alunoRepository.findByCpf(aluguelDto.getCpfAluno());
 
         aluguel.setAluno(aluno);
 
         if(aluguelDto.getTipoItem().equalsIgnoreCase("LIVRO")) {
-            if(livroRepository.findByCodigoLivro(aluguelDto.getCodigoItem()) == null) {
-                throw new EntidadeNaoEncontradaException("Livro com o código " + aluguelDto.getCodigoItem() + " não encontrado.");
-            }
-            Livro item = livroRepository.findByCodigoLivro(aluguelDto.getCodigoItem());
-            aluguel.getAluno().setItem(item);
-            aluguel.setItem(item);
-            livroRepository.save(item);
+            Livro livro = livroRepository.findById(aluguelDto.getIdItem())
+                            .orElseThrow(() -> new EntidadeNaoEncontradaException("Livro com o ID " + aluguelDto.getIdItem() + " não encontrado."));
+            aluguel.getAluno().setItem(livro);
+            aluguel.setItem(livro);
+            livroRepository.save(livro);
         } else {
-            if(filmeRepository.findByCodigoFilme(aluguelDto.getCodigoItem()) == null) {
-                throw new EntidadeNaoEncontradaException("Livro com o código " + aluguelDto.getCodigoItem() + " não encontrado.");
-            }
-            Filme item = filmeRepository.findByCodigoFilme(aluguelDto.getCodigoItem());
-            aluguel.getAluno().setItem(item);
-            aluguel.setItem(item);
-            filmeRepository.save(item);
+            Filme filme = filmeRepository.findById(aluguelDto.getIdItem())
+                            .orElseThrow(() -> new EntidadeNaoEncontradaException("Filme com o ID " + aluguelDto.getIdItem() + " não encontrado."));
+            aluguel.getAluno().setItem(filme);
+            aluguel.setItem(filme);
+            filmeRepository.save(filme);
         }
 
         if(aluguel.getItem().getQtdExemplaresDisponiveis() == 0) {

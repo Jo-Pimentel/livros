@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.br.CPF;
 
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class Aluno {
     private String nome;
 
     @Column(name = "cpf", nullable = false, unique = true)
+    @CPF(message = "CPF inválido.")
     private String cpf;
 
     @ManyToOne
