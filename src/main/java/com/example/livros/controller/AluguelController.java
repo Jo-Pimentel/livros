@@ -29,12 +29,12 @@ public class AluguelController {
         return aluguelService.buscarAluguelEspecifico(id);
     }
 
-    @PostMapping("/realizarAluguel")
+    /*@PostMapping("/realizarAluguel")
     @ResponseStatus(HttpStatus.CREATED)
     public Aluguel salvarAluguel(@RequestBody AluguelDto aluguelDto) throws ItemIndisponivelException, EntidadeNaoEncontradaException {
         //Aluno aluno = alunoService.buscarAlunoPorId(alunoService.buscarAlunoPorCpf());
         return aluguelService.realizarAluguel(aluguelDto);
-    }
+    }*/
 
     @PutMapping("/devolucao/{id}")
     @ResponseStatus(HttpStatus.CREATED)

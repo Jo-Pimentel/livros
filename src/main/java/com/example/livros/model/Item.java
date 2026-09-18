@@ -30,8 +30,8 @@ public abstract class Item {
     @Column(name = "codigo_item", unique = true)
     private String codigoItem;
 
-    @OneToMany(mappedBy = "item")
-    @JsonIgnoreProperties({"aluno", "item"})
+    @ManyToMany(mappedBy = "aluguel")
+    //@JsonIgnoreProperties({"aluno", "item"})
     private List<Aluguel> aluguel;
 
     @Column(name = "tipo_item")
@@ -40,8 +40,8 @@ public abstract class Item {
     @Column(name = "qtd_exemplares_disponiveis")
     private Integer qtdExemplaresDisponiveis;
 
-    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    /*@ManyToMany(mappedBy = "item", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"item", "aluguel"})
     //@Column(name = "alunos_locatarios")
-    private List<Aluno> alunosLocatarios;
+    private List<Aluno> alunosLocatarios;*/
 }

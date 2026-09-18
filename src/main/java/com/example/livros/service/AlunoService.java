@@ -29,6 +29,14 @@ public class AlunoService {
         Lis<>
     }*/
 
+    public List<Aluno> buscarAlunosNaPagina(int qtdItensPorPagina, int paginaAtual) {
+        List<Aluno> todosOsAlunos = this.buscarAlunos();
+
+        int indexInicial = qtdItensPorPagina * paginaAtual;
+
+        return todosOsAlunos.subList(indexInicial, indexInicial + qtdItensPorPagina - paginaAtual);
+    }
+
     public List<Aluno> buscarAlunos() {
         return alunoRepository.findAll();
     }

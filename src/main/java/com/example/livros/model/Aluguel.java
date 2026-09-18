@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "aluguel")
@@ -26,10 +27,14 @@ public class Aluguel {
     private Aluno aluno;
 
     // Aponta para a Entidade Item usando o campo 'codigoItem' (que tem unique=true em Item)
-    @ManyToOne
-    @JoinColumn(name = "id_item", referencedColumnName = "id")
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "aluguel_item",
+        joinColumns = @JoinColumn(name = "id_aluguel"),
+        inverseJoinColumns = @JoinColumn(name = "id_item")
+    )
     @JsonIgnoreProperties({"alunosLocatarios", "aluguel"})
-    private Item item;
+    private List<Item> itens;
 
     @Column(name = "data_aluguel")
     private LocalDate dataAluguel;

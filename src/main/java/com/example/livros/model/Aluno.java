@@ -30,10 +30,14 @@ public class Aluno {
     @CPF(message = "CPF inválido.")
     private String cpf;
 
-    @ManyToOne
-    @JoinColumn(name = "item_id")
+    /*@ManyToMany
+    @JoinTable(
+        name = "aluno_item",
+        joinColumns = @JoinColumn(name = "aluno_id"),
+        inverseJoinColumns = @JoinColumn(name = "item_id")
+    )
     @JsonIgnoreProperties({"alunosLocatarios", "aluguel"}) // Chave estrangeira para Person
-    private Item item;
+    private List<Item> item;*/
 
     // Opcional: Se quiser navegar do Aluno para o Aluguel
     @OneToMany(mappedBy = "aluno")

@@ -28,6 +28,12 @@ public class AlunoController {
         return alunoService.buscarAlunoPorId(id);
     }
 
+    @GetMapping("/buscarAlunosNaPagina")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Aluno> buscarAlunosNaPagina(@RequestParam int qtdItensPorPagina, @RequestParam int paginaAtual) {
+        return alunoService.buscarAlunosNaPagina(qtdItensPorPagina, paginaAtual);
+    }
+
     @GetMapping("/buscarAlunoPorCpf/{cpf}")
     @ResponseStatus(HttpStatus.OK)
     public Aluno buscarAlunoPorCpf(@PathVariable String cpf) throws EntidadeNaoEncontradaException {

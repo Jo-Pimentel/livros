@@ -1,6 +1,10 @@
 package com.example.livros.dto;
 
+import com.example.livros.model.Item;
 import lombok.*;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -8,6 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 public class AluguelDto {
     private String cpfAluno;
-    private Long idItem;
-    private String tipoItem;
+    private List<Item> itens;
+    private Integer qtdMesesAluguel;
+    //private String tipoItem;
 }

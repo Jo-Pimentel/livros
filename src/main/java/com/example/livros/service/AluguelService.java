@@ -46,8 +46,9 @@ public class AluguelService {
         Aluno aluno = alunoRepository.findByCpf(aluguelDto.getCpfAluno());
 
         aluguel.setAluno(aluno);
+        aluguel.setItens(aluguelDto.getItens());
 
-        if(aluguelDto.getTipoItem().equalsIgnoreCase("LIVRO")) {
+        /*if(aluguelDto.getTipoItem().equalsIgnoreCase("LIVRO")) {
             Livro livro = livroRepository.findById(aluguelDto.getIdItem())
                             .orElseThrow(() -> new EntidadeNaoEncontradaException("Livro com o ID " + aluguelDto.getIdItem() + " não encontrado."));
             aluguel.getAluno().setItem(livro);
@@ -59,21 +60,16 @@ public class AluguelService {
             aluguel.getAluno().setItem(filme);
             aluguel.setItem(filme);
             filmeRepository.save(filme);
-        }
+        }*/
 
-        if(aluguel.getItem().getQtdExemplaresDisponiveis() == 0) {
-            throw new ItemIndisponivelException("Nenhuma cópia de " + aluguel.getItem().getTitulo() + " disponível para aluguel.");
-        } else {
-            LocalDate dataAluguel = LocalDate.now();
-            LocalDate dataDevolucao = LocalDate.now().plusWeeks(1);
+        LocalDate dataAluguel = LocalDate.now();
+        LocalDate dataDevolucao = LocalDate.now().plusMonths(aluguelDto.getQtdMesesAluguel());
 
-            aluguel.getItem().setQtdExemplaresDisponiveis(aluguel.getItem().getQtdExemplaresDisponiveis() - 1);
-            aluguel.setDataAluguel(dataAluguel);
-            aluguel.setDataDevolucao(dataDevolucao);
-            aluguel.getAluno().setAlugando(true);
+        //aluguel.getItem().setQtdExemplaresDisponiveis(aluguel.getItem().getQtdExemplaresDisponiveis() - 1);
+        aluguel.setDataAluguel(dataAluguel);
+        aluguel.setDataDevolucao(dataDevolucao);
 
-            return aluguelRepository.save(aluguel);
-        }
+        return aluguelRepository.save(aluguel);
     }
 
     public String devolucao(Long id) throws ItemIndisponivelException, EntidadeNaoEncontradaException {
