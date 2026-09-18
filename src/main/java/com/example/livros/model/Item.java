@@ -30,7 +30,7 @@ public abstract class Item {
     @Column(name = "codigo_item", unique = true)
     private String codigoItem;
 
-    @ManyToMany(mappedBy = "aluguel")
+    @ManyToMany(mappedBy = "itens")
     //@JsonIgnoreProperties({"aluno", "item"})
     private List<Aluguel> aluguel;
 

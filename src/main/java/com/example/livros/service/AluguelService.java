@@ -72,14 +72,14 @@ public class AluguelService {
         return aluguelRepository.save(aluguel);
     }
 
-    public String devolucao(Long id) throws ItemIndisponivelException, EntidadeNaoEncontradaException {
+    /*public String devolucao(Long id) throws ItemIndisponivelException, EntidadeNaoEncontradaException {
         Aluguel aluguel = aluguelRepository.getById(id);
 
         if(aluguel.getDevolvido()) {
             throw new ItemIndisponivelException(aluguel.getItem().getTitulo() + " não está alugado no momento.");
         }
 
-        if(aluguel.getItem().getTipoItem().equalsIgnoreCase("LIVRO")) {
+        if(aluguel.getItens().getTipoItem().equalsIgnoreCase("LIVRO")) {
             Livro livro = livroRepository.findById(aluguel.getItem().getId())
                     .orElseThrow();
             livroRepository.save(livro);
@@ -97,9 +97,9 @@ public class AluguelService {
         alunoRepository.save(aluguel.getAluno());
         aluguelRepository.save(aluguel);
         return aluguel.getItem().getTitulo() + " devolvido com sucesso.";
-    }
+    }*/
 
-    public String prorrogarDevolucao(Long id) throws ItemIndisponivelException {
+    /*public String prorrogarDevolucao(Long id) throws ItemIndisponivelException {
         Aluguel aluguel = aluguelRepository.getById(id);
 
         if(aluguel.getDevolvido()) {
@@ -109,5 +109,5 @@ public class AluguelService {
         aluguel.setDataDevolucao(aluguel.getDataDevolucao().plusWeeks(1));
         aluguelRepository.save(aluguel);
         return "A devolução de " + aluguel.getItem().getTitulo() + " foi prorrogada para " + aluguel.getDataDevolucao();
-    }
+    }*/
 }

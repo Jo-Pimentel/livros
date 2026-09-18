@@ -7,6 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AluguelRepository extends JpaRepository<Aluguel, Long> {
-    /*@Query(value = "SELECT * FROM aluguel_item WHERE item_id=?", nativeQuery = true)
-    Livro livro*/
+
 }

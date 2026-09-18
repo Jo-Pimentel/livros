@@ -29,14 +29,14 @@ public class AluguelController {
         return aluguelService.buscarAluguelEspecifico(id);
     }
 
-    /*@PostMapping("/realizarAluguel")
+    @PostMapping("/realizarAluguel")
     @ResponseStatus(HttpStatus.CREATED)
     public Aluguel salvarAluguel(@RequestBody AluguelDto aluguelDto) throws ItemIndisponivelException, EntidadeNaoEncontradaException {
         //Aluno aluno = alunoService.buscarAlunoPorId(alunoService.buscarAlunoPorCpf());
         return aluguelService.realizarAluguel(aluguelDto);
-    }*/
+    }
 
-    @PutMapping("/devolucao/{id}")
+    /*@PutMapping("/devolucao/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public String devolucao(@PathVariable Long id) throws ItemIndisponivelException, EntidadeNaoEncontradaException {
         return aluguelService.devolucao(id);
@@ -46,5 +46,5 @@ public class AluguelController {
     @ResponseStatus(HttpStatus.CREATED)
     public String prorrogarDevolucao(@PathVariable Long id) throws ItemIndisponivelException {
         return aluguelService.prorrogarDevolucao(id);
-    }
+    }*/
 }

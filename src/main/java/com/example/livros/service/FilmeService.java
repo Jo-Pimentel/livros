@@ -3,6 +3,7 @@ package com.example.livros.service;
 import com.example.livros.exception.DadosAusentesException;
 import com.example.livros.exception.EntidadeNaoEncontradaException;
 import com.example.livros.model.Filme;
+import com.example.livros.model.Item;
 import com.example.livros.model.Livro;
 import com.example.livros.repository.FilmeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,4 +73,8 @@ public class FilmeService {
         }
         filmeRepository.deleteById(id);
     }
+
+    /*public void aumentarAQtdDeExemplaresDisponiveis(List<Item>) {
+
+    }*/
 }
