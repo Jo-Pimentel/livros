@@ -8,6 +8,7 @@ import lombok.Setter;
 
 @Entity
 @DiscriminatorValue("livro")
+@PrimaryKeyJoinColumn(name = "id")
 @Getter
 @Setter
 @AllArgsConstructor

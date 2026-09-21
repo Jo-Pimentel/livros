@@ -27,6 +27,8 @@ public class AluguelService {
     @Autowired
     private AlunoRepository alunoRepository;
 
+    //private List<Item> listaAux;
+
     public List<Aluguel> listarAlugueis() {
         return aluguelRepository.findAll();
     }
@@ -46,8 +48,20 @@ public class AluguelService {
         Aluno aluno = alunoRepository.findByCpf(aluguelDto.getCpfAluno());
 
         aluguel.setAluno(aluno);
-        aluguel.setItens(aluguelDto.getItens());
 
+        for(int i = 0; i < aluguelDto.getIdsItens().size(); i++) {
+            if(aluguelDto.getTiposItens().get(i).equalsIgnoreCase("LIVRO")) {
+                Livro livro = livroRepository.findById(aluguelDto.getIdsItens().get(i))
+                        .orElseThrow(() -> new EntidadeNaoEncontradaException("Livro não encontrado."));
+                livro.setQtdExemplaresDisponiveis(livro.getQtdExemplaresDisponiveis() - 1);
+                aluguel.getItens().add(livro);
+            } else {
+                Filme filme = filmeRepository.findById(aluguelDto.getIdsItens().get(i))
+                        .orElseThrow(() -> new EntidadeNaoEncontradaException("Filme não encontrado."));
+                filme.setQtdExemplaresDisponiveis(filme.getQtdExemplaresDisponiveis() - 1);
+                aluguel.getItens().add(filme);
+            }
+        }
         /*if(aluguelDto.getTipoItem().equalsIgnoreCase("LIVRO")) {
             Livro livro = livroRepository.findById(aluguelDto.getIdItem())
                             .orElseThrow(() -> new EntidadeNaoEncontradaException("Livro com o ID " + aluguelDto.getIdItem() + " não encontrado."));

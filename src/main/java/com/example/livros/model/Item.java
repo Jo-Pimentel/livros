@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "item")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 @Getter
 @Setter
 @AllArgsConstructor

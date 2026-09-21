@@ -1,5 +1,6 @@
 package com.example.livros.dto;
 
+import com.example.livros.model.Filme;
 import com.example.livros.model.Item;
 import com.example.livros.model.Livro;
 import lombok.*;
@@ -13,7 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 public class AluguelDto {
     private String cpfAluno;
-    private List<Item> itens;
+    private List<Long> idsItens;
+    private List<String> tiposItens;
     private Integer qtdMesesAluguel;
     //private String tipoItem;
 }

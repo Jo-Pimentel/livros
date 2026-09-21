@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -34,7 +35,7 @@ public class Aluguel {
         inverseJoinColumns = @JoinColumn(name = "id_item")
     )
     @JsonIgnoreProperties({"alunosLocatarios", "aluguel"})
-    private List<Item> itens;
+    private List<Item> itens = new ArrayList<>();
 
     @Column(name = "data_aluguel")
     private LocalDate dataAluguel;
