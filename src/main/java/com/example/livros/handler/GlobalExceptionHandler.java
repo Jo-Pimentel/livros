@@ -1,9 +1,6 @@
 package com.example.livros.handler;
 
-import com.example.livros.exception.DadosAusentesException;
-import com.example.livros.exception.ErrorResponse;
-import com.example.livros.exception.ItemIndisponivelException;
-import com.example.livros.exception.EntidadeNaoEncontradaException;
+import com.example.livros.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -49,5 +46,15 @@ public class GlobalExceptionHandler {
                 .build();
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handlerCpfInvalidoException(CpfInvalidoException cpfie) {
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .mensagem(cpfie.getMessage())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 }
