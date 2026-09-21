@@ -16,6 +16,6 @@ public class AluguelDto {
     private String cpfAluno;
     private List<Long> idsItens;
     private List<String> tiposItens;
-    private Integer qtdMesesAluguel;
+    private Integer qtdDiasAluguel;
     //private String tipoItem;
 }

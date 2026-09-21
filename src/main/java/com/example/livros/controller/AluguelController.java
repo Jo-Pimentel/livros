@@ -4,6 +4,7 @@ import com.example.livros.dto.AluguelDto;
 import com.example.livros.exception.EntidadeNaoEncontradaException;
 import com.example.livros.exception.ItemIndisponivelException;
 import com.example.livros.model.Aluguel;
+import com.example.livros.model.Item;
 import com.example.livros.service.AluguelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,12 @@ public class AluguelController {
         return aluguelService.buscarAluguelEspecifico(id);
     }
 
+    /*@GetMapping("/buscarItensAlugados/{idAluguel}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Item> buscarItensAlugados(@PathVariable Long idAluguel) {
+        return aluguelService.buscarItensAlugados(idAluguel);
+    }*/
+
     @PostMapping("/realizarAluguel")
     @ResponseStatus(HttpStatus.CREATED)
     public Aluguel salvarAluguel(@RequestBody AluguelDto aluguelDto) throws ItemIndisponivelException, EntidadeNaoEncontradaException {
@@ -36,13 +43,13 @@ public class AluguelController {
         return aluguelService.realizarAluguel(aluguelDto);
     }
 
-    /*@PutMapping("/devolucao/{id}")
+    @PutMapping("/devolucao/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public String devolucao(@PathVariable Long id) throws ItemIndisponivelException, EntidadeNaoEncontradaException {
         return aluguelService.devolucao(id);
     }
 
-    @PutMapping("/prorrogarDevolucao/{id}")
+    /*@PutMapping("/prorrogarDevolucao/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public String prorrogarDevolucao(@PathVariable Long id) throws ItemIndisponivelException {
         return aluguelService.prorrogarDevolucao(id);

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.example.livros.repository.LivroRepository;
 import com.example.livros.repository.FilmeRepository;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,8 +28,6 @@ public class AluguelService {
     @Autowired
     private AlunoRepository alunoRepository;
 
-    //private List<Item> listaAux;
-
     public List<Aluguel> listarAlugueis() {
         return aluguelRepository.findAll();
     }
@@ -37,6 +36,15 @@ public class AluguelService {
         return aluguelRepository.findById(id)
                 .orElseThrow(() -> new EntidadeNaoEncontradaException("Aluguel com o ID " + id + " não encontrado."));
     }
+
+    /*public List<Item> buscarItensAlugados(Long idAluguel) {
+        List<Long> idsItensAlugados = aluguelRepository.buscarIdsItensAlugados(idAluguel);
+        List<Item> itensAlugados = new ArrayList<>();
+
+        for(Long idItemAlugado : idsItensAlugados) {
+
+        }
+    }*/
 
     public Aluguel realizarAluguel(AluguelDto aluguelDto) throws ItemIndisponivelException, EntidadeNaoEncontradaException {
         Aluguel aluguel = new Aluguel();
@@ -62,38 +70,24 @@ public class AluguelService {
                 aluguel.getItens().add(filme);
             }
         }
-        /*if(aluguelDto.getTipoItem().equalsIgnoreCase("LIVRO")) {
-            Livro livro = livroRepository.findById(aluguelDto.getIdItem())
-                            .orElseThrow(() -> new EntidadeNaoEncontradaException("Livro com o ID " + aluguelDto.getIdItem() + " não encontrado."));
-            aluguel.getAluno().setItem(livro);
-            aluguel.setItem(livro);
-            livroRepository.save(livro);
-        } else {
-            Filme filme = filmeRepository.findById(aluguelDto.getIdItem())
-                            .orElseThrow(() -> new EntidadeNaoEncontradaException("Filme com o ID " + aluguelDto.getIdItem() + " não encontrado."));
-            aluguel.getAluno().setItem(filme);
-            aluguel.setItem(filme);
-            filmeRepository.save(filme);
-        }*/
 
         LocalDate dataAluguel = LocalDate.now();
-        LocalDate dataDevolucao = LocalDate.now().plusMonths(aluguelDto.getQtdMesesAluguel());
+        LocalDate dataDevolucao = LocalDate.now().plusDays(aluguelDto.getQtdDiasAluguel());
 
-        //aluguel.getItem().setQtdExemplaresDisponiveis(aluguel.getItem().getQtdExemplaresDisponiveis() - 1);
         aluguel.setDataAluguel(dataAluguel);
         aluguel.setDataDevolucao(dataDevolucao);
 
         return aluguelRepository.save(aluguel);
     }
 
-    /*public String devolucao(Long id) throws ItemIndisponivelException, EntidadeNaoEncontradaException {
+    public String devolucao(Long id) throws ItemIndisponivelException, EntidadeNaoEncontradaException {
         Aluguel aluguel = aluguelRepository.getById(id);
 
         if(aluguel.getDevolvido()) {
-            throw new ItemIndisponivelException(aluguel.getItem().getTitulo() + " não está alugado no momento.");
+            throw new ItemIndisponivelException("Este aluguel está inativo.");
         }
 
-        if(aluguel.getItens().getTipoItem().equalsIgnoreCase("LIVRO")) {
+        /*if(aluguel.getItens().getTipoItem().equalsIgnoreCase("LIVRO")) {
             Livro livro = livroRepository.findById(aluguel.getItem().getId())
                     .orElseThrow();
             livroRepository.save(livro);
@@ -101,17 +95,19 @@ public class AluguelService {
             Filme filme = filmeRepository.findById(aluguel.getItem().getId())
                     .orElseThrow();
             filmeRepository.save(filme);
+        }*/
+
+        for(int i = 0; i < aluguel.getItens().size(); i++) {
+            aluguel.getItens().get(i).setQtdExemplaresDisponiveis(aluguel.getItens().get(i).getQtdExemplaresDisponiveis() + 1);
         }
 
-        aluguel.getItem().setQtdExemplaresDisponiveis(aluguel.getItem().getQtdExemplaresDisponiveis() + 1);
         aluguel.setDevolvido(true);
         aluguel.setDevolvidoEm(LocalDate.now());
         aluguel.getAluno().setAlugando(false);
-        aluguel.getAluno().setItem(null);
         alunoRepository.save(aluguel.getAluno());
         aluguelRepository.save(aluguel);
-        return aluguel.getItem().getTitulo() + " devolvido com sucesso.";
-    }*/
+        return "Itens devolvidos com sucesso.";
+    }
 
     /*public String prorrogarDevolucao(Long id) throws ItemIndisponivelException {
         Aluguel aluguel = aluguelRepository.getById(id);
