@@ -1,12 +1,20 @@
 package com.example.livros.service;
 
+import com.example.livros.exception.CpfInvalidoException;
 import com.example.livros.exception.DadosAusentesException;
 import com.example.livros.exception.EntidadeNaoEncontradaException;
 import com.example.livros.exception.ItemIndisponivelException;
 import com.example.livros.model.Aluno;
 import com.example.livros.repository.AlunoRepository;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.data.autoconfigure.web.DataWebProperties;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 import com.example.livros.model.Item;
 import com.example.livros.model.Livro;
@@ -25,8 +33,14 @@ public class AlunoService {
     @Autowired
     private FilmeRepository filmeRepository;
 
-    /*public boolean cpfValido(String cpf) {
-        Lis<>
+    /*public boolean validarCpf(Long cpf) {
+        List<Integer> listaNumeros = List.of(10, 9, 8, 7, 6, 5, 4, 3, 2);
+        List<Long> digitosCpf = List.of(cpf);
+        Long resultadoSoma = 0L;
+
+        for(int i = 0; i < listaNumeros.size(); i++) {
+            resultadoSoma += listaNumeros.get(i) * digitosCpf.get(i);
+        }
     }*/
 
     public List<Aluno> buscarAlunosNaPagina(int qtdItensPorPagina, int paginaAtual) {
@@ -52,6 +66,10 @@ public class AlunoService {
         } else {
             return alunoRepository.findByCpf(cpf);
         }
+    }
+
+    public Page<Aluno> buscarAlunosPorPagina(Pageable pageable) {
+        return alunoRepository.findAll(pageable);
     }
 
     public Aluno salvarAluno(Aluno aluno) throws DadosAusentesException {

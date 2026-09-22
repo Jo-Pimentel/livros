@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 
-    @ExceptionHandler(Exception.class)
+    /*@ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handlerException(DadosAusentesException dae) {
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .mensagem(dae.getMessage())
@@ -46,9 +46,9 @@ public class GlobalExceptionHandler {
                 .build();
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
-    }
+    }*/
 
-    @ExceptionHandler(Exception.class)
+    /*@ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handlerCpfInvalidoException(CpfInvalidoException cpfie) {
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .mensagem(cpfie.getMessage())
@@ -56,5 +56,5 @@ public class GlobalExceptionHandler {
                 .build();
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
-    }
+    }*/
 }

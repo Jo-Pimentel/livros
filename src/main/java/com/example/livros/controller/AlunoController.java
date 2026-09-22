@@ -3,8 +3,12 @@ package com.example.livros.controller;
 import com.example.livros.exception.DadosAusentesException;
 import com.example.livros.exception.EntidadeNaoEncontradaException;
 import com.example.livros.model.Aluno;
+import com.example.livros.repository.AlunoRepository;
 import com.example.livros.service.AlunoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -34,6 +38,12 @@ public class AlunoController {
         return alunoService.buscarAlunosNaPagina(qtdItensPorPagina, paginaAtual);
     }
 
+    @GetMapping("/buscarAlunosPorPagina")
+    @ResponseStatus(HttpStatus.OK)
+    public Page<Aluno> buscarAlunosPorPagina(Pageable pageable) {
+        return alunoService.buscarAlunosPorPagina(pageable);
+    }
+
     @GetMapping("/buscarAlunoPorCpf/{cpf}")
     @ResponseStatus(HttpStatus.OK)
     public Aluno buscarAlunoPorCpf(@PathVariable String cpf) throws EntidadeNaoEncontradaException {
@@ -48,7 +58,7 @@ public class AlunoController {
 
     @PutMapping("/atualizarAluno/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Aluno atualizarAluno(@PathVariable Long id, @RequestBody Aluno aluno) throws EntidadeNaoEncontradaException, DadosAusentesException {
+    public Aluno atualizarAluno(@PathVariable Long id, @RequestBody @Valid Aluno aluno) throws EntidadeNaoEncontradaException, DadosAusentesException {
         return alunoService.atualizarAluno(id, aluno);
     }
 
