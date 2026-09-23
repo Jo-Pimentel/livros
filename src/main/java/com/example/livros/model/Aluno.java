@@ -27,7 +27,7 @@ public class Aluno {
     private String nome;
 
     @Column(name = "cpf", nullable = false, unique = true)
-    //@CPF(message = "CPF inválido.")
+    @CPF(message = "CPF inválido.")
     private String cpf;
 
     /*@ManyToMany

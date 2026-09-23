@@ -61,10 +61,12 @@ public class AlunoService {
     }
 
     public Aluno buscarAlunoPorCpf(String cpf) throws EntidadeNaoEncontradaException {
-        if(alunoRepository.findByCpf(cpf) == null) {
+        if(alunoRepository.findIdByCpf(cpf) == null) {
             throw new EntidadeNaoEncontradaException("Aluno com o CPF " + cpf + " não encontrado.");
         } else {
-            return alunoRepository.findByCpf(cpf);
+            Long idAluno = alunoRepository.findIdByCpf(cpf);
+            return alunoRepository.findById(idAluno)
+                    .orElseThrow(() -> new EntidadeNaoEncontradaException("Aluno com o ID " + idAluno + " não encontrado."));
         }
     }
 
