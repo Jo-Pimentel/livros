@@ -7,6 +7,8 @@ import com.example.livros.model.*;
 import com.example.livros.repository.AluguelRepository;
 import com.example.livros.repository.AlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.example.livros.repository.LivroRepository;
 import com.example.livros.repository.FilmeRepository;
@@ -32,6 +34,10 @@ public class AluguelService {
         return aluguelRepository.findAll();
     }
 
+    public Page<Aluguel> listarAlugueisPorPagina(Pageable pageable) {
+        return aluguelRepository.findAll(pageable);
+    }
+
     public Aluguel buscarAluguelEspecifico(Long id) throws EntidadeNaoEncontradaException {
         return aluguelRepository.findById(id)
                 .orElseThrow(() -> new EntidadeNaoEncontradaException("Aluguel com o ID " + id + " não encontrado."));
@@ -49,11 +55,11 @@ public class AluguelService {
     public Aluguel realizarAluguel(AluguelDto aluguelDto) throws ItemIndisponivelException, EntidadeNaoEncontradaException {
         Aluguel aluguel = new Aluguel();
 
-        if(alunoRepository.findByCpf(aluguelDto.getCpfAluno()) == null) {
+        if(alunoRepository.findIdByCpf(aluguelDto.getCpfAluno()) == null) {
             throw new EntidadeNaoEncontradaException("Aluno com o CPF " + aluguelDto.getCpfAluno() + " não encontrado.");
         }
 
-        Aluno aluno = alunoRepository.findByCpf(aluguelDto.getCpfAluno());
+        Aluno aluno = alunoRepository.findIdByCpf(aluguelDto.getCpfAluno());
 
         aluguel.setAluno(aluno);
 

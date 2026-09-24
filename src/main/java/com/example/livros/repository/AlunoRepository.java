@@ -11,8 +11,8 @@ import java.awt.print.Pageable;
 
 @Repository
 public interface AlunoRepository extends JpaRepository<Aluno, Long> {
-    @Query(value = "SELECT id FROM aluno WHERE cpf = ?", nativeQuery = true)
-    Long findIdByCpf(String cpf);
+    @Query(value = "SELECT * FROM aluno WHERE cpf = ?", nativeQuery = true)
+    Aluno findIdByCpf(String cpf);
 
     /*@Query(value = "SELECT * FROM aluno ORDER BY id LIMIT 2 OFFSET 10")
     Page<Aluno> buscarAlunosNaPagina(Pageable pageable);*/

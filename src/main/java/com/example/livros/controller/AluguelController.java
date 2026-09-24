@@ -7,6 +7,8 @@ import com.example.livros.model.Aluguel;
 import com.example.livros.model.Item;
 import com.example.livros.service.AluguelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -28,6 +30,12 @@ public class AluguelController {
     @ResponseStatus(HttpStatus.OK)
     public Aluguel buscarAluguelEspecifico(@PathVariable Long id) throws EntidadeNaoEncontradaException {
         return aluguelService.buscarAluguelEspecifico(id);
+    }
+
+    @GetMapping("/listarAlugueisPorPagina")
+    @ResponseStatus(HttpStatus.OK)
+    public Page<Aluguel> listarAlugueisPorPagina(Pageable pageable) {
+        return aluguelService.listarAlugueisPorPagina(pageable);
     }
 
     /*@GetMapping("/buscarItensAlugados/{idAluguel}")
