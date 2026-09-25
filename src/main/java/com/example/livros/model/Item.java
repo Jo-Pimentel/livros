@@ -34,7 +34,7 @@ public abstract class Item {
     //@JsonIgnoreProperties({"aluno", "item"})
     private List<Aluguel> aluguel;
 
-    @Column(name = "tipo_item")
+    @Column(name = "tipo_item", insertable=false, updatable=false)
     private String tipoItem;
 
     @Column(name = "qtd_exemplares_disponiveis")

@@ -2,7 +2,9 @@ package com.example.livros.controller;
 
 import com.example.livros.exception.DadosAusentesException;
 import com.example.livros.exception.EntidadeNaoEncontradaException;
+import com.example.livros.model.Item;
 import com.example.livros.model.Livro;
+import com.example.livros.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,9 @@ import java.util.List;
 public class LivroController {
     @Autowired
     private LivroService livroService;
+
+    @Autowired
+    private ItemService itemService;
 
     @GetMapping("/buscarLivros")
     @ResponseStatus(HttpStatus.OK)
