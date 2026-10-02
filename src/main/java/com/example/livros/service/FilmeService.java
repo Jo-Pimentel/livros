@@ -7,6 +7,8 @@ import com.example.livros.model.Item;
 import com.example.livros.model.Livro;
 import com.example.livros.repository.FilmeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -35,6 +37,10 @@ public class FilmeService {
             return filmeRepository.findByCodigoFilme(codigoItem);
         }*/
         return filmeRepository.findByCodigoFilme(codigoItem);
+    }
+
+    public Page<Filme> buscarFilmesPorPagina(Pageable pageable) {
+        return filmeRepository.findAll(pageable);
     }
 
     public Filme salvarFilme(Filme filme) throws DadosAusentesException {

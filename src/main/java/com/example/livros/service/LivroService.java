@@ -6,6 +6,8 @@ import com.example.livros.repository.LivroRepository;
 import com.example.livros.model.Livro;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,6 +26,10 @@ public class LivroService {
     public Livro buscarLivroPorId(Long id) throws EntidadeNaoEncontradaException {
         return livroRepository.findById(id).
                 orElseThrow(() -> new EntidadeNaoEncontradaException("Livro com o ID " + id + " não econtrado"));
+    }
+
+    public Page<Livro> buscarLivrosPorPagina(Pageable pageable) {
+        return livroRepository.findAll(pageable);
     }
 
     public Livro buscarLivroPorCodigoItem(String codigoItem) throws EntidadeNaoEncontradaException {

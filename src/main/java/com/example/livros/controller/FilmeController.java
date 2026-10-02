@@ -5,6 +5,8 @@ import com.example.livros.exception.EntidadeNaoEncontradaException;
 import com.example.livros.model.Filme;
 import com.example.livros.service.FilmeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +35,12 @@ public class FilmeController {
     @ResponseStatus(HttpStatus.OK)
     public Filme buscarFilmePorCodigoItem(@PathVariable String codigoItem) throws EntidadeNaoEncontradaException {
         return filmeService.buscarFilmePorCodigoItem(codigoItem);
+    }
+
+    @GetMapping("/buscarFilmesPorPagina")
+    @ResponseStatus(HttpStatus.OK)
+    public Page<Filme> buscarFilmesPorPagina(Pageable pageable) {
+        return filmeService.buscarFilmesPorPagina(pageable);
     }
 
     @PostMapping("/salvarFilme")

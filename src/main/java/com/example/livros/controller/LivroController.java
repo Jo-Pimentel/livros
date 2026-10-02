@@ -2,10 +2,13 @@ package com.example.livros.controller;
 
 import com.example.livros.exception.DadosAusentesException;
 import com.example.livros.exception.EntidadeNaoEncontradaException;
+import com.example.livros.model.Filme;
 import com.example.livros.model.Item;
 import com.example.livros.model.Livro;
 import com.example.livros.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import com.example.livros.service.LivroService;
@@ -31,6 +34,12 @@ public class LivroController {
     @ResponseStatus(HttpStatus.OK)
     public Livro buscarLivroPorId(@PathVariable Long id) throws EntidadeNaoEncontradaException {
         return livroService.buscarLivroPorId(id);
+    }
+
+    @GetMapping("/buscarLivrosPorPagina")
+    @ResponseStatus(HttpStatus.OK)
+    public Page<Livro> buscarFilmesPorPagina(Pageable pageable) {
+        return livroService.buscarLivrosPorPagina(pageable);
     }
 
     @GetMapping("/buscarLivroPorCodigoItem/{codigoItem}")
