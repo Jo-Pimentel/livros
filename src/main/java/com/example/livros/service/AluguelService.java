@@ -38,6 +38,10 @@ public class AluguelService {
         return aluguelRepository.findAll(pageable);
     }
 
+    public Page<Aluguel> buscarAluguelPorDataMaisRecente(Pageable pageable) {
+        return aluguelRepository.buscarAlugueisPorDataMaisRecente(pageable);
+    }
+
     public Aluguel buscarAluguelEspecifico(Long id) throws EntidadeNaoEncontradaException {
         return aluguelRepository.findById(id)
                 .orElseThrow(() -> new EntidadeNaoEncontradaException("Aluguel com o ID " + id + " não encontrado."));

@@ -13,5 +13,6 @@ public interface AluguelRepository extends JpaRepository<Aluguel, Long> {
     @Query(value = "SELECT id_item FROM aluguel_item WHERE id_aluguel=?", nativeQuery = true)
     List<Long> buscarIdsItensAlugados(Long id);
 
-    //Page<Aluguel> listarAlugueisPorPagina(Pageable pageable);
+    @Query(value = "SELECT * FROM aluguel ORDER BY data_aluguel DESC", nativeQuery = true)
+    Page<Aluguel> buscarAlugueisPorDataMaisRecente(Pageable pageable);
 }

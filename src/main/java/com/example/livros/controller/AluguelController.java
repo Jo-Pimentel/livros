@@ -38,6 +38,12 @@ public class AluguelController {
         return aluguelService.listarAlugueisPorPagina(pageable);
     }
 
+    @GetMapping("/buscarAlugueisPorDataMaisRecente")
+    @ResponseStatus(HttpStatus.OK)
+    public Page<Aluguel> buscarAlugueisPorDataMaisRecente(Pageable pageable) {
+        return aluguelService.buscarAluguelPorDataMaisRecente(pageable);
+    }
+
     /*@GetMapping("/buscarItensAlugados/{idAluguel}")
     @ResponseStatus(HttpStatus.OK)
     public List<Item> buscarItensAlugados(@PathVariable Long idAluguel) {
