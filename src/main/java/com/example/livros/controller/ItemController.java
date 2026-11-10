@@ -23,4 +23,16 @@ public class ItemController {
     public Page<Item> findAll(Pageable pageable) {
         return itemService.buscarItens(pageable);
     }
+
+    @GetMapping("/buscarLivros")
+    @ResponseStatus(HttpStatus.OK)
+    public Page<Item> listarLivros(Pageable pageable) {
+        return itemService.listarLivros(pageable);
+    }
+
+    @GetMapping("/buscarFilmes")
+    @ResponseStatus(HttpStatus.OK)
+    public Page<Item> listarFilmes(Pageable pageable) {
+        return itemService.listarFilmes(pageable);
+    }
 }

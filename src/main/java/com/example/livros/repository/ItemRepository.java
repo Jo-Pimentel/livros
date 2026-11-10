@@ -12,4 +12,10 @@ import java.util.List;
 public interface ItemRepository extends JpaRepository<Item, Long> {
     /*@Query(value = "SELECT tipo_item FROM item")
     List<String> buscarTipoItens();*/
+
+    @Query(value = "SELECT * FROM ITEM WHERE TIPO_ITEM='livro'", nativeQuery = true)
+    Page<Item> listarLivros(Pageable pageable);
+
+    @Query(value = "SELECT * FROM ITEM WHERE TIPO_ITEM='filme'", nativeQuery = true)
+    Page<Item> listarFilmes(Pageable pageable);
 }

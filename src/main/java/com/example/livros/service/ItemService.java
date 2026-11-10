@@ -18,4 +18,12 @@ public class ItemService {
     public Page<Item> buscarItens(Pageable pageable) {
         return itemRepository.findAll(pageable);
     }
+
+    public Page<Item> listarLivros(Pageable pageable) {
+        return itemRepository.listarLivros(pageable);
+    }
+
+    public Page<Item> listarFilmes(Pageable pageable) {
+        return itemRepository.listarFilmes(pageable);
+    }
 }
