@@ -10,7 +10,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "item")
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo_item")
 @Getter
 @Setter
 @AllArgsConstructor

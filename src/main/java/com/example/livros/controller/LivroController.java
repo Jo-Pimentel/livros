@@ -21,8 +21,8 @@ public class LivroController {
     @Autowired
     private LivroService livroService;
 
-    @Autowired
-    private ItemService itemService;
+    /*@Autowired
+    private ItemService itemService;*/
 
     @GetMapping("/buscarLivros")
     @ResponseStatus(HttpStatus.OK)

@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Entity
 @DiscriminatorValue("filme")
-@PrimaryKeyJoinColumn(name = "id")
+//@PrimaryKeyJoinColumn(name = "id")
 @Getter
 @Setter
 @AllArgsConstructor

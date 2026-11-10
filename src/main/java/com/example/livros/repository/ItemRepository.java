@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
-    /*@Query(value = "SELECT tipo_item FROM item WHERE id = ?")
-    String buscarTipoItem(Long id);*/
+    /*@Query(value = "SELECT tipo_item FROM item")
+    List<String> buscarTipoItens();*/
 }
